@@ -1,6 +1,6 @@
 SRC = src/main.c src/game_utils.c src/raycaster.c src/player_controls.c src/map_utils.c
 
-NAME = game
+NAME = cub3D
 
 OBJDIR = obj
 OBJDIR_bonus = obj_bonus

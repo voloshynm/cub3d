@@ -24,7 +24,7 @@
 # define FLOOR_COLOR 0x808080
 # define CEILING_COLOR 0x87CEEB
 
-#include "../mlx/mlx.h"
+#include "../minilibx/mlx.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
