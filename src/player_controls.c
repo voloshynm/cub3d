@@ -28,8 +28,8 @@ void move_player(t_player *player) {
 
     if(player->left_rotate) player->angle -= rotSpeed;
     if(player->right_rotate) player->angle += rotSpeed;
-    if(player->angle > 2*PI) player->angle -= 2*PI;
-    if(player->angle < 0) player->angle += 2*PI;
+    if (player->angle > 2 * PI) player->angle -= 2 * PI;
+    if (player->angle < 0) player->angle += 2 * PI;
 
     if(player->key_up) {
         player->x += cos(player->angle) * speed;

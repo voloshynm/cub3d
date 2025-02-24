@@ -107,8 +107,10 @@ void cast_ray(t_game *game, float rayAngle, int x) {
     else
         perpWallDist = (mapY * BLOCK - game->player.y + (1 - stepY) * BLOCK / 2) / rayDirY;
     
+    float angleDiff = rayAngle - game->player.angle;
+    perpWallDist *= cos(angleDiff);  // Apply fisheye correction
     float lineHeight = (BLOCK / perpWallDist) * HEIGHT;
-    
+        
     // Calculate world position for proper texture wrapping
     float wallX;
     if(side == 0) {
