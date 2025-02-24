@@ -29,9 +29,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
-
-// ... (rest of header remains the same)
-
+#include <string.h>
 
 typedef struct s_player {
     float x;
@@ -57,8 +55,7 @@ typedef struct s_game {
     void *tex_north;
     void *tex_east;
     void *tex_south;
-    void *tex_west;
-    
+    void *tex_west;    
     char *tex_north_data;
     char *tex_east_data;
     char *tex_south_data;
@@ -87,7 +84,7 @@ void clear_image(t_game *game);
 void put_pixel(int x, int y, int color, t_game *game);
 void load_textures(t_game *game);
 void cast_ray(t_game *game, float rayAngle, int x);
-void draw_textured_wall(t_game *game, int x, int side, int step, float wallX, float lineHeight);
+void draw_textured_wall(t_game *game, int x, int side, int texX, float lineHeight);
 bool touch_wall(float x, float y, t_game *game);
 
 

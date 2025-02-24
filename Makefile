@@ -33,7 +33,7 @@ minilibx/libmlx.a: minilibx
 	$(MAKE) -C minilibx
 
 minilibx:
-	curl -LOJ https://cdn.intra.42.fr/document/document/26474/minilibx-linux.tgz
+	curl -LOJ https://cdn.intra.42.fr/document/document/25926/minilibx-linux.tgz
 	tar -xzf minilibx-linux.tgz
 	mv minilibx-linux minilibx
 	rm -r minilibx-linux.tgz

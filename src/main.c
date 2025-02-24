@@ -1,17 +1,5 @@
 #include "../inc/game.h"
 
-void init_player(t_player *player) {
-    player->x = 2.5f * BLOCK;  // Spawn away from edges
-    player->y = 2.5f * BLOCK;
-    player->angle = PI / 2;  // Start facing north
-    player->key_up = false;
-    player->key_down = false;
-    player->key_right = false;
-    player->key_left = false;
-    player->left_rotate = false;
-    player->right_rotate = false;
-}
-
 char **get_map(void) {
     char **map = malloc(sizeof(char *) * 11);
     map[0] = "111111111111111";
@@ -26,6 +14,18 @@ char **get_map(void) {
     map[9] = "111111111111111";
     map[10] = NULL;
     return map;
+}
+
+void init_player(t_player *player) {
+    player->x = 2.5f * BLOCK;  // Spawn away from edges
+    player->y = 2.5f * BLOCK;
+    player->angle = PI / 2;  // Start facing north
+    player->key_up = false;
+    player->key_down = false;
+    player->key_right = false;
+    player->key_left = false;
+    player->left_rotate = false;
+    player->right_rotate = false;
 }
 
 void init_game(t_game *game) {

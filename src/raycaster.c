@@ -25,23 +25,33 @@ void load_textures(t_game *game) {
         &game->tex_size_line, &game->tex_endian);
 }
 
-void draw_textured_wall(t_game *game, int x, int side, int step, float wallX, float lineHeight) {
+void draw_textured_wall(t_game *game, int x, int side, int texX, float lineHeight) {
     int drawStart = (HEIGHT - lineHeight) / 2;
     int drawEnd = (HEIGHT + lineHeight) / 2;
-    int texX = (int)(wallX * (float)TEX_WIDTH);
+    
+    // Select correct texture based on wall orientation
     char *tex_data;
-
-    // Determine which texture to use
     if (side == 0) { // East/West walls
-        tex_data = (step > 0) ? game->tex_east_data : game->tex_west_data;
+        tex_data = (game->player.angle > PI/2 && game->player.angle < 3*PI/2) 
+                 ? game->tex_west_data : game->tex_east_data;
     } else { // North/South walls
-        tex_data = (step > 0) ? game->tex_south_data : game->tex_north_data;
+        tex_data = (game->player.angle > PI) 
+                 ? game->tex_south_data : game->tex_north_data;
     }
 
+    float texStep = (float)TEX_HEIGHT / lineHeight;
+    float texPos = (drawStart - HEIGHT/2 + lineHeight/2) * texStep;
+
     for(int y = drawStart; y < drawEnd; y++) {
-        int texY = (y - drawStart) * TEX_HEIGHT / lineHeight;
-        int color = *(int*)(tex_data + (texY * game->tex_size_line + texX * (game->tex_bpp/8)));
-        put_pixel(x, y, color, game);
+        int texY = (int)texPos & (TEX_HEIGHT - 1);
+        texPos += texStep;
+        
+        // Critical safety check
+        if(texX >= 0 && texX < TEX_WIDTH && texY >= 0 && texY < TEX_HEIGHT) {
+            int color = *(int*)(tex_data + 
+                (texY * game->tex_size_line + texX * (game->tex_bpp/8)));
+            put_pixel(x, y, color, game);
+        }
     }
 }
 
@@ -98,14 +108,18 @@ void cast_ray(t_game *game, float rayAngle, int x) {
         perpWallDist = (mapY * BLOCK - game->player.y + (1 - stepY) * BLOCK / 2) / rayDirY;
     
     float lineHeight = (BLOCK / perpWallDist) * HEIGHT;
-    float wallX = side == 0 ? 
-        game->player.y + perpWallDist * rayDirY : 
-        game->player.x + perpWallDist * rayDirX;
-    wallX -= (int)wallX;
-
+    
+    // Calculate world position for proper texture wrapping
+    float wallX;
     if(side == 0) {
-        draw_textured_wall(game, x, side, stepX, wallX, lineHeight);
+        wallX = game->player.y + perpWallDist * rayDirY;
     } else {
-        draw_textured_wall(game, x, side, stepY, wallX, lineHeight);
+        wallX = game->player.x + perpWallDist * rayDirX;
     }
+    
+    // Full texture coordinate calculation with wrapping
+    wallX = fmod(wallX, BLOCK) / BLOCK;  // Wrap every 64 pixels
+    int texX = (int)(wallX * TEX_WIDTH);
+
+    draw_textured_wall(game, x, side, texX, lineHeight);
 }

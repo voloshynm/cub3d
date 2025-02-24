@@ -1,5 +1,4 @@
 #include "../inc/game.h"
-#include <string.h>
 
 void validate_map(t_game *game) {
     int height = 0;
