@@ -29,7 +29,7 @@ A 3D maze exploration game built with raycasting techniques, inspired by the leg
 ### Installation
 
 1. **Clone the repository**
-git clone https://github.com/yourusername/cub3d.git
+git clone https://github.com/voloshynm/cub3d.git
 cd cub3d
 
 2. **Compile the project**
@@ -53,7 +53,7 @@ make
 ## 🗺️ Map Configuration
 
 Maps are defined in `.cub` files with the following format:
-
+```
 NO ./textures/north_wall.xpm
 SO ./textures/south_wall.xpm
 WE ./textures/west_wall.xpm
@@ -69,7 +69,7 @@ C 174,234,255
 10000000000000000000000000001
 10000000000000001100000010001
 11111111111111111111111111111
-
+```
 
 ### Map Elements
 
@@ -82,17 +82,25 @@ C 174,234,255
   - ` ` (space) - Void area
 
 ## 🏗️ Project Structure
-
+```
 cub3d/
 ├── src/ # Source files
 │ ├── main.c # Program entry point
+│ ├── init_visuals.c # launch mlx loop, render frame and textures 
 │ ├── parser.c # Map file parsing
-│ ├── parse_elements.c # Texture and color parsing
+│ ├── parse_elements.c # Texture parsing
+│ ├── parse_elements_helper.c # Texture parsing
+│ ├── parse_elements_color.c # Color parsing
 │ ├── parse_map.c # Map validation and processing
+│ ├── parse_map_directions.c # Map processing
+│ ├── validate_walls.c # Map validation
 │ ├── raycasting.c # Core raycasting engine
+│ ├── raycasting_helper.c # Core raycasting engine
+│ ├── raycasting_rays_direction.c # Core raycasting engine
 │ ├── controls.c # Input handling
+│ ├── controls_helper.c # Input handling
 │ ├── utils.c # Utility functions
-│ └── validate_walls.c # Map validation
+│ └── utils_2.c # Utility functions
 ├── includes/
 │ └── cub3d.h # Header file
 ├── textures/ # Texture files
@@ -100,7 +108,7 @@ cub3d/
 ├── libft/ # Custom C library
 ├── Makefile # Build configuration
 └── README.md
-
+```
 
 ## 🔧 Technical Implementation
 
@@ -196,7 +204,7 @@ This project is part of the 42 School curriculum. Feel free to use it for educat
 
 ## 👥 Authors
 
-- **Your Name** - *Initial work* - [YourGitHub](https://github.com/yourusername)
+- **Maksym Voloshyn <mvoloshy>** - **Hugo Huber <hhuber>**
 
 ## 🙏 Acknowledgments
 
