@@ -1,4 +1,15 @@
-/* parse_elements.c */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_elements.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 22:59:56 by mvoloshy          #+#    #+#             */
+/*   Updated: 2025/06/02 22:59:57 by mvoloshy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	parse_texture(char *line, t_texture *textures)

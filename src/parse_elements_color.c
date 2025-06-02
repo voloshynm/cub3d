@@ -1,4 +1,15 @@
-/* parse_elements.c */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_elements_color.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 22:59:44 by mvoloshy          #+#    #+#             */
+/*   Updated: 2025/06/02 22:59:46 by mvoloshy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	parse_color(char *line, t_color *floor, t_color *ceiling)
@@ -42,4 +53,9 @@ void	set_color_values(t_color *color, int *values)
 	color->r = values[0];
 	color->g = values[1];
 	color->b = values[2];
+}
+
+int	create_rgb(int r, int g, int b)
+{
+	return (r << 16 | g << 8 | b);
 }

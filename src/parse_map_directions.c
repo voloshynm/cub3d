@@ -1,4 +1,15 @@
-/* parse_map.c */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map_directions.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 23:00:00 by mvoloshy          #+#    #+#             */
+/*   Updated: 2025/06/02 23:00:02 by mvoloshy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 void	set_player_direction(t_game *data, char dir)

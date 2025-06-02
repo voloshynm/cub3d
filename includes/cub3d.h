@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 23:01:10 by mvoloshy          #+#    #+#             */
+/*   Updated: 2025/06/02 23:01:51 by mvoloshy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /* cub3d.h */
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -144,7 +156,7 @@ void	set_color_values(t_color *color, int *values);
 
 /* Map parsing */
 int		parse_map_section(int fd, t_game *game);
-int		read_map_lines(int fd, char ***temp_map, int *capacity);
+int		read_map_lines(int fd, char ***temp_map, int *capacity, int count);
 int		expand_map_if_needed(char ***temp_map, int *capacity, int count);
 void	calculate_map_width(t_game *game);
 
@@ -186,8 +198,6 @@ void	calculate_draw_limits(t_ray *ray, t_game *game);
 void	draw_vertical_line(t_game *game, int x, t_ray *ray);
 double	calculate_wall_x(t_ray *ray, t_game *game);
 int		calculate_tex_x(t_ray *ray, double wall_x);
-void	draw_textured_pixel(t_game *game, int x, int y, t_ray *ray,
-			double *tex_pos, double step, int tex_x);
 int		get_texture_color(t_game *game, t_ray *ray, int y, int tex_x);
 int		determine_texture_number(t_ray *ray);
 
@@ -202,11 +212,11 @@ void	handle_backward_movement(t_game *game);
 void	handle_left_strafe(t_game *game);
 void	handle_right_strafe(t_game *game);
 void	move_player(t_game *game, double move_x, double move_y);
-int		is_valid_position(t_game *game, double x, double y);
 
 /* Rotation functions */
 void	rotate_player(t_game *game, double rot_speed);
-void	rotate_direction_vector(t_game *game, double rot_speed, double old_dir_x);
+void	rotate_direction_vector(t_game *game, double rot_speed,
+			double old_dir_x);
 void	rotate_camera_plane(t_game *game, double rot_speed, double old_plane_x);
 
 /* ============ UTILITY FUNCTIONS ============ */

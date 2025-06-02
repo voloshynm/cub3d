@@ -1,4 +1,15 @@
-/* controls.c */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   controls.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 22:59:29 by mvoloshy          #+#    #+#             */
+/*   Updated: 2025/06/02 22:59:30 by mvoloshy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	key_press(int keycode, t_game *game)
@@ -27,7 +38,8 @@ void	move_player(t_game *game, double move_x, double move_y)
 
 	new_x = game->player.x + move_x;
 	new_y = game->player.y + move_y;
-	if (!is_valid_position(game, new_x, new_y))
+	if (!(new_x >= 0 && new_x < game->map_width
+			&& new_y >= 0 && new_y < game->map_height))
 		return ;
 	if (game->map[(int)game->player.y][(int)new_x] != '1')
 		game->player.x = new_x;
@@ -46,7 +58,8 @@ void	rotate_player(t_game *game, double rot_speed)
 	rotate_camera_plane(game, rot_speed, old_plane_x);
 }
 
-void	rotate_direction_vector(t_game *game, double rot_speed, double old_dir_x)
+void	rotate_direction_vector(t_game *game,
+			double rot_speed, double old_dir_x)
 {
 	game->player.dir_x = game->player.dir_x * cos(rot_speed)
 		- game->player.dir_y * sin(rot_speed);
@@ -60,10 +73,4 @@ void	rotate_camera_plane(t_game *game, double rot_speed, double old_plane_x)
 		- game->player.plane_y * sin(rot_speed);
 	game->player.plane_y = old_plane_x * sin(rot_speed)
 		+ game->player.plane_y * cos(rot_speed);
-}
-
-int	close_window(t_game *game)
-{
-	cleanup_and_exit(game, 0);
-	return (0);
 }

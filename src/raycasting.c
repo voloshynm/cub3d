@@ -1,4 +1,15 @@
-/* raycasting.c */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 23:00:31 by mvoloshy          #+#    #+#             */
+/*   Updated: 2025/06/02 23:00:32 by mvoloshy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 void	cast_rays(t_game *game)
@@ -63,21 +74,21 @@ void	calculate_draw_limits(t_ray *ray, t_game *game)
 
 void	draw_vertical_line(t_game *game, int x, t_ray *ray)
 {
-	double	wall_x;
-	int		tex_x;
 	double	step;
 	double	tex_pos;
 	int		y;
+	int		color;
 
-	wall_x = calculate_wall_x(ray, game);
-	tex_x = calculate_tex_x(ray, wall_x);
 	step = 1.0 * TEX_HEIGHT / ray->line_height;
 	tex_pos = (ray->draw_start - game->win_height / 2
 			+ ray->line_height / 2) * step;
 	y = ray->draw_start;
 	while (y < ray->draw_end)
 	{
-		draw_textured_pixel(game, x, y, ray, &tex_pos, step, tex_x);
+		tex_pos += step;
+		color = get_texture_color(game, ray, (int)tex_pos & (TEX_HEIGHT - 1),
+				calculate_tex_x(ray, calculate_wall_x(ray, game)));
+		my_mlx_pixel_put(&game->screen, x, y, color);
 		y++;
 	}
 }

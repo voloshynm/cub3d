@@ -1,4 +1,15 @@
-/* parse_map.c */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 23:00:05 by mvoloshy          #+#    #+#             */
+/*   Updated: 2025/06/02 23:00:07 by mvoloshy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 int	parse_map_section(int fd, t_game *data)
@@ -7,11 +18,12 @@ int	parse_map_section(int fd, t_game *data)
 	int		capacity;
 	int		count;
 
+	count = 0;
 	capacity = 10;
 	temp_map = malloc(sizeof(char *) * capacity);
 	if (!temp_map)
 		return (0);
-	count = read_map_lines(fd, &temp_map, &capacity);  // Pass address of temp_map
+	count = read_map_lines(fd, &temp_map, &capacity, count);
 	if (count <= 0)
 	{
 		free(temp_map);
@@ -30,13 +42,12 @@ void	calculate_map_width(t_game *data)
 	int	current_width;
 
 	if (!data || !data->map)
-		return;
-	
+		return ;
 	i = 0;
 	max_width = 0;
 	while (i < data->map_height)
 	{
-		if (data->map[i])  // Check if the line exists
+		if (data->map[i])
 		{
 			current_width = ft_strlen(data->map[i]);
 			if (current_width > max_width)
@@ -54,13 +65,13 @@ int	find_player(t_game *data)
 	int		player_count;
 	char	player_dir;
 
-	i = 0;
+	i = -1;
 	player_count = 0;
 	player_dir = 0;
-	while (i < data->map_height)
+	while (++i < data->map_height)
 	{
-		j = 0;
-		while (data->map[i][j])
+		j = -1;
+		while (data->map[i][++j])
 		{
 			if (data->map[i][j] == 'N' || data->map[i][j] == 'S' ||
 				data->map[i][j] == 'E' || data->map[i][j] == 'W')
@@ -69,9 +80,7 @@ int	find_player(t_game *data)
 				player_dir = data->map[i][j];
 				player_count++;
 			}
-			j++;
 		}
-		i++;
 	}
 	if (player_count == 1)
 		set_player_direction(data, player_dir);
@@ -98,8 +107,8 @@ int	check_valid_characters(t_game *data)
 		while (data->map[i][j])
 		{
 			c = data->map[i][j];
-			if (c != '0' && c != '1' && c != 'N' && c != 'S' &&
-				c != 'E' && c != 'W' && c != ' ')
+			if (c != '0' && c != '1' && c != 'N' && c != 'S'
+				&& c != 'E' && c != 'W' && c != ' ')
 				return (0);
 			j++;
 		}

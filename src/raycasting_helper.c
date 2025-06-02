@@ -1,4 +1,15 @@
-/* raycasting.c */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting_helper.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 23:00:23 by mvoloshy          #+#    #+#             */
+/*   Updated: 2025/06/02 23:00:25 by mvoloshy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 double	calculate_wall_x(t_ray *ray, t_game *game)
@@ -23,18 +34,6 @@ int	calculate_tex_x(t_ray *ray, double wall_x)
 	if (ray->side == 1 && ray->ray_dir_y < 0)
 		tex_x = TEX_WIDTH - tex_x - 1;
 	return (tex_x);
-}
-
-void	draw_textured_pixel(t_game *game, int x, int y, t_ray *ray,
-		double *tex_pos, double step, int tex_x)
-{
-	int	tex_y;
-	int	color;
-
-	tex_y = (int)*tex_pos & (TEX_HEIGHT - 1);
-	*tex_pos += step;
-	color = get_texture_color(game, ray, tex_y, tex_x);
-	my_mlx_pixel_put(&game->screen, x, y, color);
 }
 
 int	get_texture_color(t_game *game, t_ray *ray, int tex_y, int tex_x)

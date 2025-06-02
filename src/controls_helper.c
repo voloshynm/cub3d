@@ -1,4 +1,15 @@
-/* controls.c */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   controls_helper.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/02 22:58:53 by mvoloshy          #+#    #+#             */
+/*   Updated: 2025/06/02 22:59:10 by mvoloshy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 void	handle_forward_movement(t_game *game)
@@ -25,7 +36,8 @@ void	handle_right_strafe(t_game *game)
 		-game->player.dir_x * MOVE_SPEED);
 }
 
-int	is_valid_position(t_game *game, double x, double y)
+int	close_window(t_game *game)
 {
-	return (x >= 0 && x < game->map_width && y >= 0 && y < game->map_height);
+	cleanup_and_exit(game, 0);
+	return (0);
 }
