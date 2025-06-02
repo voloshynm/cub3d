@@ -6,7 +6,7 @@
 /*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 23:00:34 by mvoloshy          #+#    #+#             */
-/*   Updated: 2025/06/02 23:00:35 by mvoloshy         ###   ########.fr       */
+/*   Updated: 2025/06/02 23:47:23 by mvoloshy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,52 @@ void	cleanup_and_exit(t_game *game, int exit_code)
 	}
 	free_game_data(game);
 	exit(exit_code);
+}
+
+static void	free_game_path(t_game *game)
+{
+	if (game->tex_paths.north)
+	{
+		free(game->tex_paths.north);
+		game->tex_paths.north = NULL;
+	}
+	if (game->tex_paths.south)
+	{
+		free(game->tex_paths.south);
+		game->tex_paths.south = NULL;
+	}
+	if (game->tex_paths.east)
+	{
+		free(game->tex_paths.east);
+		game->tex_paths.east = NULL;
+	}
+	if (game->tex_paths.west)
+	{
+		free(game->tex_paths.west);
+		game->tex_paths.west = NULL;
+	}
+}
+
+void	free_game_data(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	free_game_path(game);
+	if (game->map)
+	{
+		while (i < game->map_height)
+		{
+			if (game->map[i])
+			{
+				free(game->map[i]);
+				game->map[i] = NULL;
+			}
+			i++;
+		}
+		free(game->map);
+		game->map = NULL;
+	}
 }
 
 char	*ft_strncpy(char *dest, const char *src, size_t n)
@@ -76,45 +122,4 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 	ft_memcpy(new_ptr, ptr, copy_size);
 	free(ptr);
 	return (new_ptr);
-}
-
-static int	get_next_char(int fd, char *c)
-{
-	static char	buffer[BUFFER_SIZE];
-	static int	pos = 0;
-	static int	bytes_read = 0;
-
-	if (pos >= bytes_read)
-	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read <= 0)
-			return (0);
-		pos = 0;
-	}
-	*c = buffer[pos++];
-	return (1);
-}
-
-char	*read_line(int fd)
-{
-	char	*line;
-	int		i;
-	char	ch;
-
-	i = 0;
-	line = malloc(MAX_LINE);
-	if (!line)
-		return (NULL);
-	while (i < MAX_LINE - 1)
-	{
-		if (!get_next_char(fd, &ch))
-			break ;
-		if (ch == '\n')
-			break ;
-		line[i++] = ch;
-	}
-	line[i] = '\0';
-	if (i == 0 && ch != '\n')
-		return (free(line), NULL);
-	return (line);
 }

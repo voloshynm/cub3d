@@ -6,7 +6,7 @@
 /*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 23:00:38 by mvoloshy          #+#    #+#             */
-/*   Updated: 2025/06/02 23:00:39 by mvoloshy         ###   ########.fr       */
+/*   Updated: 2025/06/02 23:46:57 by mvoloshy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,44 +43,49 @@ char	*trim_whitespace(char *str)
 	return (start);
 }
 
-int	is_empty_line(char *line)
-{
-	int	i;
-
-	i = 0;
-	if (!line)
-		return (1);
-	while (line[i])
-	{
-		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-void	free_game_data(t_game *game)
-{
-	int	i;
-
-	i = 0;
-	if (game->tex_paths.north)
-		free(game->tex_paths.north);
-	if (game->tex_paths.south)
-		free(game->tex_paths.south);
-	if (game->tex_paths.east)
-		free(game->tex_paths.east);
-	if (game->tex_paths.west)
-		free(game->tex_paths.west);
-	if (game->map)
-	{
-		while (i < game->map_height)
-			free(game->map[i++]);
-		free(game->map);
-	}
-}
-
 void	print_error(char *message)
 {
 	printf("Error\n%s\n", message);
+}
+
+static int	get_next_char(int fd, char *c)
+{
+	static char	buffer[BUFFER_SIZE];
+	static int	pos = 0;
+	static int	bytes_read = 0;
+
+	if (pos >= bytes_read)
+	{
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read <= 0)
+			return (0);
+		pos = 0;
+	}
+	*c = buffer[pos++];
+	return (1);
+}
+
+char	*read_line(int fd)
+{
+	char	*line;
+	int		i;
+	char	ch;
+
+	ch = 0;
+	i = 0;
+	line = malloc(MAX_LINE);
+	if (!line)
+		return (NULL);
+	while (i < MAX_LINE - 1)
+	{
+		if (!get_next_char(fd, &ch))
+			break ;
+		if (ch == '\n')
+			break ;
+		line[i++] = ch;
+	}
+	line[i] = '\0';
+	if (i == 0 && ch != '\n')
+		return (free(line), NULL);
+	return (line);
 }

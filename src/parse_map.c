@@ -6,7 +6,7 @@
 /*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 23:00:05 by mvoloshy          #+#    #+#             */
-/*   Updated: 2025/06/02 23:00:07 by mvoloshy         ###   ########.fr       */
+/*   Updated: 2025/06/03 00:32:20 by mvoloshy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	parse_map_section(int fd, t_game *data)
 	if (count <= 0)
 	{
 		free(temp_map);
-		return (0);
+		return (print_error("No map found or map in wrong position"), 0);
 	}
 	data->map = temp_map;
 	data->map_height = count;

@@ -6,7 +6,7 @@
 /*   By: mvoloshy <mvoloshy@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 23:00:19 by mvoloshy          #+#    #+#             */
-/*   Updated: 2025/06/02 23:00:20 by mvoloshy         ###   ########.fr       */
+/*   Updated: 2025/06/03 00:39:24 by mvoloshy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ int	parse_cub_file(char *filename, t_game *data)
 	while (elements_found < 6)
 	{
 		line = read_line(fd);
-		if (parse_texture(line, &data->tex_paths))
-			elements_found++;
-		else if (parse_color(line, &data->floor, &data->ceiling))
+		if (!line)
+			return (close(fd), print_error("Unexpected end of file"), 0);
+		if (parse_texture(line, &data->tex_paths)
+			|| parse_color(line, &data->floor, &data->ceiling))
 			elements_found++;
 		free(line);
 	}
@@ -37,8 +38,7 @@ int	parse_cub_file(char *filename, t_game *data)
 		return (close(fd), print_error("Missing elements"), 0);
 	if (!parse_map_section(fd, data))
 		return (close(fd), 0);
-	close(fd);
-	return (validate_map(data));
+	return (close(fd), validate_map(data));
 }
 
 int	validate_map(t_game *data)
@@ -66,6 +66,22 @@ int	validate_extension(char *filename)
 	return (strcmp(ext, ".cub") == 0);
 }
 
+int	is_empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (!line)
+		return (1);
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	read_map_lines(int fd, char ***temp_map, int *capacity, int count)
 {
 	char	*line;
@@ -77,8 +93,11 @@ int	read_map_lines(int fd, char ***temp_map, int *capacity, int count)
 		if (!line)
 			break ;
 		if (is_empty_line(line))
+		{
 			free(line);
-		if (count >= *capacity - 1 && line)
+			continue ;
+		}
+		if (count >= *capacity - 1)
 		{
 			*capacity *= 2;
 			new_map = ft_realloc(*temp_map, sizeof(char *) * (count + 1),
@@ -87,9 +106,7 @@ int	read_map_lines(int fd, char ***temp_map, int *capacity, int count)
 				return (free(line), -1);
 			*temp_map = new_map;
 		}
-		if (line)
-			(*temp_map)[count++] = line;
+		(*temp_map)[count++] = line;
 	}
-	(*temp_map)[count] = NULL;
-	return (count);
+	return ((*temp_map)[count] = NULL, count);
 }
