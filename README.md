@@ -206,6 +206,9 @@ This project is part of the 42 School curriculum. Feel free to use it for educat
 
 - **Maksym Voloshyn <mvoloshy>** - **Hugo Huber <hhuber>**
 
+Thanks to mcombeau for sharing textures and maps for rigirous testing!
+https://github.com/mcombeau/cub3D
+
 ## 🙏 Acknowledgments
 
 - 42 School for the project specification
