@@ -1,7 +1,7 @@
-NO ./textures/north_wall.xpm
-SO ./textures/south_wall.xpm
-WE ./textures/west_wall.xpm
-EA ./textures/east_wall.xpm
+NO textures/north_wall.xpm
+SO textures/south_wall.xpm
+WE textures/west_wall.xpm
+EA textures/east_wall.xpm
 
 F 127,125,119
 C 174,234,255
