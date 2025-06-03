@@ -124,9 +124,6 @@ clean:
 
 # Full clean including MinilibX and libft
 fclean: clean
-	@if [ -d "$(LIBFTDIR)" ]; then \
-		$(MAKE) fclean -C $(LIBFTDIR); \
-	fi
 	@rm -rf $(MLX_DIR) $(LIBFTDIR)
 	@rm -f $(NAME)
 	@echo "$(RED)All files cleaned including MinilibX and libft$(NC)"
