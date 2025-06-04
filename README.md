@@ -2,8 +2,8 @@
 
 A 3D maze exploration game built with raycasting techniques, inspired by the legendary Wolfenstein 3D. This project creates a dynamic first-person perspective view inside a maze using the MinilibX graphics library.
 
-![cub3D Demo](https://img.shields.io/badge/42-Project-blue)
-![Language](https://img.shields.io/badge/Language-C-brightgreen)
+![cub3D Demo](https://img.shields.io/badge/42-Project-brightgreen)
+![Language](https://img.shields.io/badge/Language-C-darkgrey)
 ![Graphics](https://img.shields.io/badge/Graphics-MinilibX-orange)
 
 ## 🎮 Features
