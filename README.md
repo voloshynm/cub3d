@@ -1,4 +1,5 @@
 # cub3D
+![image](https://github.com/user-attachments/assets/d2615a53-2ee0-4d26-a321-b32e0a320925)
 
 A 3D maze exploration game built with raycasting techniques, inspired by the legendary Wolfenstein 3D. This project creates a dynamic first-person perspective view inside a maze using the MinilibX graphics library.
 
